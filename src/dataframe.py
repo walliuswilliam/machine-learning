@@ -37,3 +37,16 @@ class DataFrame:
     data_dict = {columns[key]:[[arr[i][key] for i in range(len(arr))]] for key in range(len(columns))}
     return data_dict
 
+  def convert_row_from_array_to_dict(self, row):
+    row_to_dict = {self.columns[index]:row[index] for index in range(len(row))}
+    return row_to_dict
+  
+  def select_rows_where(self, funct):
+    rows = []
+    arr_array = self.to_array()
+    diction = self.data_dict
+    for row in arr_array:
+      if funct(self.convert_row_from_array_to_dict(row)):
+        rows.append(row)
+    return rows
+
