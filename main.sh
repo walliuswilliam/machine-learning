@@ -1,1 +1,1 @@
-echo Hello World
+python tests/test_matrix.py
