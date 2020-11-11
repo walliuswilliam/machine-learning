@@ -34,9 +34,8 @@ class DataFrame:
 
   @classmethod
   def from_array(cls, arr, columns):
-    firstname, lastname, age = map(arr[0][0], arr[0][1], arr[0][2])
-    student = cls(firstname, lastname, age)
-    return student
+    data_dict = {columns[key]:[data for data in arr[i for i in range(len(arr))][key]]}
+    return data_dict
 
     
 
