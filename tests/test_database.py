@@ -76,3 +76,11 @@ arr = [['Kevin', 'Fray', 5],
            ['Anna', 'Smith', 13],
            ['Sylvia', 'Mendez', 9]]
 df = DataFrame.from_array(arr, columns)
+
+print('testing method "select rows where..."')
+assert df.select_rows_where(
+    lambda row: len(row['firstname']) >= len(row['lastname'])
+                and row['age'] > 10
+    ).to_array() == [['Charles', 'Trapp', 17]]
+print('passed')
+

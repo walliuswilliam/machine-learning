@@ -34,6 +34,6 @@ class DataFrame:
 
   @classmethod
   def from_array(cls, arr, columns):
-    data_dict = {columns[key]:[[data for data in arr[i][key] for i in range(len(arr))]] for key in range(len(columns))}
+    data_dict = {columns[key]:[[arr[i][key] for i in range(len(arr))]] for key in range(len(columns))}
     return data_dict
 
