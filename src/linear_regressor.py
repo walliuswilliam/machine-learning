@@ -9,4 +9,14 @@ class LinearRegressor:
     self.dependent_variable = dependent_variable
     self.coefficients = self.calculate_coefficients()
   
-  def calculate_coefficients():
+  def calculate_coefficients(self):
+    mat = Matrix([[1, num] for num in list(self.df.data_dict.values())[0][0]])
+    mat_t = mat.transpose()
+    mat_mult = mat_t.matrix_multiply(mat)
+    mat_inv = mat_mult.inverse()
+    mat_pseudoinv = mat_inv.matrix_multiply(mat_t)
+    multiplier = [[num] for num in list(self.df.data_dict.values())[1][0]]
+    multiplier_mat = mat_pseudoinv.matrix_multiply(Matrix(multiplier))
+    return [[round(num, 5) for num in row][0] for row in multiplier_mat.elements]
+  
+  def predict(self, ):
