@@ -19,4 +19,5 @@ class LinearRegressor:
     multiplier_mat = mat_pseudoinv.matrix_multiply(Matrix(multiplier))
     return [[round(num, 5) for num in row][0] for row in multiplier_mat.elements]
   
-  def predict(self, ):
+  def predict(self, h_worked):
+    return round(self.coefficients[0] + list(h_worked.values())[0]*self.coefficients[1], 5)

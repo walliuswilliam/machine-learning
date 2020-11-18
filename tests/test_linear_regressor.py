@@ -17,5 +17,5 @@ assert regressor.coefficients == [0.01667, 0.15] # meaning that the model is pro
 print('passed')
 
 print('testing method "predict"...')
-assert regressor.predict({'hours worked': 4}) == 0.61667
+assert regressor.predict({'hours worked': 4}) == 0.61667, regressor.predict({'hours worked': 4})
 print('passed')
