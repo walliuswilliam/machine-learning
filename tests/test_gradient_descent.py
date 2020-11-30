@@ -19,7 +19,7 @@ print('passed')
 
 print('testing method "compute_gradient"...')
 ans = minimizer.compute_gradient(delta=0.01)
-assert round(ans, 5) == [-2.000] # rounded to 5 decimal places
+assert round(ans, 5) == [-2.0]
 print('passed')
 
 minimizer.descend(alpha=0.001, delta=0.01, num_steps=1)
