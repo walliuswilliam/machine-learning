@@ -12,18 +12,28 @@ class LinearRegressor:
   def calculate_coefficients(self):
     final_dict = {}
     mat = Matrix([[1, num] for num in list(self.df.data_dict.values())[0][0]])
+    print('mat', mat.elements)
     mat_t = mat.transpose()
+    print('mat_t', mat_t.elements)
     mat_mult = mat_t.matrix_multiply(mat)
+    print('mat_mult', mat_mult.elements)
     mat_inv = mat_mult.inverse()
+    print('mat_inv', mat_inv.elements)
     mat_pseudoinv = mat_inv.matrix_multiply(mat_t)
+    print('mat_pseudoinv', mat_pseudoinv.elements)
     multiplier = [[num] for num in list(self.df.data_dict.values())[1][0]]
+    print('multiplier', multiplier)
     multiplier_mat = mat_pseudoinv.matrix_multiply(Matrix(multiplier))
+    print('multiplier_mat', multiplier_mat.elements)
+    
     for num in range(len(multiplier_mat.elements)):
+      print('num', num)
+      print(multiplier_mat.elements)
       if num == 0:
         key = 'constant'
       else:
         key = list(self.df.data_dict.keys())[num]
-        final_dict[key] = [row[0] for row in multiplier_mat.elements][num]
+      final_dict[key] = [row[0] for row in multiplier_mat.elements][num]
     return final_dict
   
   def predict(self, h_worked):
