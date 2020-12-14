@@ -18,12 +18,11 @@ class LinearRegressor:
     mat_pseudoinv = mat_inv.matrix_multiply(mat_t)
     multiplier = [[num] for num in list(self.df.data_dict.values())[1][0]]
     multiplier_mat = mat_pseudoinv.matrix_multiply(Matrix(multiplier))
-    final_dict
     for num in range(len(multiplier_mat.elements)):
       if num == 0:
         key = 'constant'
       else:
-        key = self.df.data_dict.values[num]
+        key = list(self.df.data_dict.keys())[num]
         final_dict[key] = [row[0] for row in multiplier_mat.elements][num]
     return final_dict
   
