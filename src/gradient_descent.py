@@ -11,12 +11,12 @@ class GradientDescent:
   def compute_gradient(self, delta):
     p = self.point[0]
     deriv = (self.f(p+0.5*delta)-self.f(p-0.5*delta))/delta
-    return deriv
+    return [deriv]
   
   def descend(self, alpha, delta, num_steps):
     point = self.point
-    for num in num_steps:
-      derivative = self.compute_gradient(point, delta)
+    for num in range(num_steps):
+      derivative = self.compute_gradient(delta)
       point = point-alpha*derivative
     return self.f(point)
 

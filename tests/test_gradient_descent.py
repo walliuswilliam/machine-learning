@@ -18,8 +18,8 @@ assert minimizer.point == [0]
 print('passed')
 
 print('testing method "compute_gradient"...')
-ans = minimizer.compute_gradient(delta=0.01)
-assert round(ans, 5) == [-2.0]
+ans = [round(x, 5) for x in minimizer.compute_gradient(delta=0.01)]
+assert ans == [-2.000], round(ans[0], 5)
 print('passed')
 
 minimizer.descend(alpha=0.001, delta=0.01, num_steps=1)
