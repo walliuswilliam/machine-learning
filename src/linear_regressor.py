@@ -11,8 +11,14 @@ class LinearRegressor:
   
   def calculate_coefficients(self):
     final_dict = {}
-    mat = Matrix([[1, num] for num in list(self.df.data_dict.values())[0][0]])
-    print('mat', mat.elements)
+    mat = []
+    for row in range(len(self.df.data_dict.values())):
+      mat_row = [1]
+      for column_name in self.df.columns:
+        if column_name != self.dependent_variable:
+          print('column_name', column_name)
+          mat_row.append(self.df.select_columns(column_name))
+      mat.append(mat_row)
     mat_t = mat.transpose()
     print('mat_t', mat_t.elements)
     mat_mult = mat_t.matrix_multiply(mat)
