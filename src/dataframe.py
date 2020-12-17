@@ -16,11 +16,6 @@ class DataFrame:
 
   def select_columns(self, columns):
     dictionary = self.data_dict
-    print('dict', dictionary)
-    for key in self.columns:
-      print('columns', columns)
-      print('key', key)
-      print('dictionary[key]', dictionary[key])
     temp_dict = {key:dictionary[key] for key in self.columns}
     final_dict = DataFrame(temp_dict, columns)
     return final_dict

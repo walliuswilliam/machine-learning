@@ -17,8 +17,10 @@ class LinearRegressor:
       for column_name in self.df.columns:
         if column_name != self.dependent_variable:
           print('column_name', column_name)
-          mat_row.append(self.df.select_columns(column_name))
+          mat_row.append(self.df.select_columns(column_name).data_dict)
       mat.append(mat_row)
+    mat = Matrix(mat)
+    print('mat', mat.elements)
     mat_t = mat.transpose()
     print('mat_t', mat_t.elements)
     mat_mult = mat_t.matrix_multiply(mat)
