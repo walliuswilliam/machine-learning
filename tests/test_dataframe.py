@@ -87,19 +87,24 @@ df = DataFrame.from_array(arr, columns)
 path_to_datasets = '/home/runner/machine-learning/datasets/'
 filename = 'airtravel.csv' 
 filepath = path_to_datasets + filename
-df = DataFrame.from_csv(filepath, header=True)
+# df = DataFrame.from_csv(filepath, header=True)
 
-print('testing "from csv"...')
-assert df.to_array() == [['"Month"', '"1958"', '"1959"', '"1960"'],
-  ['"JAN"',  '340',  '360',  '417'],
-  ['"FEB"',  '318',  '342',  '391'],
-  ['"MAR"',  '362',  '406',  '419'],
-  ['"APR"',  '348',  '396',  '461'],
-  ['"MAY"',  '363',  '420',  '472'],
-  ['"JUN"',  '435',  '472',  '535'],
-  ['"JUL"',  '491',  '548',  '622'],
-  ['"AUG"',  '505',  '559',  '606'],
-  ['"SEP"',  '404',  '463',  '508'],
-  ['"OCT"',  '359',  '407',  '461'],
-  ['"NOV"',  '310',  '362',  '390'],
-  ['"DEC"',  '337',  '405',  '432']]
+# print('testing "from csv"...')
+# assert df.to_array() == [['"Month"', '"1958"', '"1959"', '"1960"'],
+#   ['"JAN"',  '340',  '360',  '417'],
+#   ['"FEB"',  '318',  '342',  '391'],
+#   ['"MAR"',  '362',  '406',  '419'],
+#   ['"APR"',  '348',  '396',  '461'],
+#   ['"MAY"',  '363',  '420',  '472'],
+#   ['"JUN"',  '435',  '472',  '535'],
+#   ['"JUL"',  '491',  '548',  '622'],
+#   ['"AUG"',  '505',  '559',  '606'],
+#   ['"SEP"',  '404',  '463',  '508'],
+#   ['"OCT"',  '359',  '407',  '461'],
+#   ['"NOV"',  '310',  '362',  '390'],
+#   ['"DEC"',  '337',  '405',  '432']]
+
+path_to_datasets = '/home/runner/machine-learning/datasets/'
+filename = 'airtravel.csv' 
+with open(path_to_datasets + filename, "r") as file:
+  print(file.read())
