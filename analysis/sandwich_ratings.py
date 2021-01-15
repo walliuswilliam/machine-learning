@@ -14,7 +14,7 @@ df = DataFrame.from_array(
      [0,6,7],
      [0,8,6]
     ],
-    columns = ['Slices of Roast Beef', 'Tablespooms of Peanut Butter', 'Rating']
+    columns = ['Slices of Roast Beef', 'Tablespoons of Peanut Butter', 'Rating']
 )
 
 regressor = LinearRegressor(df, dependent_variable='Rating')

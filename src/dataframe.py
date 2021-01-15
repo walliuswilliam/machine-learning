@@ -51,7 +51,9 @@ class DataFrame:
           dict_rows[key].append(value)
     return DataFrame(dict_rows, self.columns)
 
-  # def from_csv(path_to_csv, header=True):
-  #   with open(path_to_datasets + filename, "r") as file:
+  def from_csv(path_to_csv, header=True):
+    with open(path_to_datasets + filename, "r") as file:
+      csv = file.split('\n')
+      print(csv)
 
 

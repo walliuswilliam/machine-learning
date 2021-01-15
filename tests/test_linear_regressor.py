@@ -33,7 +33,7 @@ df = DataFrame.from_array(
 regressor = LinearRegressor(df, dependent_variable='taste rating')
 
 print('testing attribute "coefficients"...')
-assert regressor.coefficients == {'constant': 0.19252336, 'scoops of chocolate': -0.05981308,'scoops of vanilla': 0.13271028}, regressor.coefficients
+assert {k:round(v,8) for k,v in regressor.coefficients.items()} == {'constant': 0.19252336, 'scoops of chocolate': -0.05981308,'scoops of vanilla': 0.13271028}, {k:round(v,8) for k,v in regressor.coefficients.items()}
 print('passed')
 
 print('testing method "predict"...')
