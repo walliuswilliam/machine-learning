@@ -1,3 +1,5 @@
+import random
+
 def show_board(locations):
   board = '........\n........\n........\n........\n........\n........\n........\n........'
   for point in range(len(locations)):
@@ -36,9 +38,36 @@ def calc_cost(locations):
     total_cost += col_row_checker(point, locations)
   total_cost += diagonal_checker(locations)
   return total_cost
-  
 
+
+def rand_point():
+  return (random.randint(0,7), random.randint(0,7))
+
+def random_optimizer(n):
+  min_location = []
+  min_cost = 10000000
+  for num in range(n):
+    test_location = [rand_point() for num in range(8)]
+    test_cost = calc_cost(test_location)
+    if test_cost < min_cost:
+      min_location = test_location
+      min_cost = test_cost
+  return  {'locations': min_location, 'cost': min_cost}
+
+  
+print('showing board...')
 locations = [(0,0), (6,1), (2,2), (5,3), (4,4), (7,5), (1,6), (2,6)]
 print(show_board(locations))
+print('')
 
-print(calc_cost(locations))
+print('calculating cost...')
+assert calc_cost(locations) == 10
+print('passed')
+print('')
+
+print('testing random_optimizer on n_vals...')
+n_vals = [10, 50, 100, 500, 1000]
+for n in n_vals:
+  print('n =', n, ':', random_optimizer(n))
+
+
