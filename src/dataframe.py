@@ -1,18 +1,34 @@
+import sys
+sys.path.append('src')
+from matrix import Matrix
+
 class DataFrame:
   def __init__(self, data_dict, column_order):
     self.data_dict = data_dict
     self.columns = column_order
   
   def to_array(self): 
-    temp_dict = self.data_dict
-    col_index = 0
-    col_len = len(temp_dict[self.columns[0]])
-    final_array = [[0 for col in self.columns] for row in range(col_len)]
-    for col in self.columns:
-      for dict_index in range(len(temp_dict[col])):
-        final_array[dict_index][col_index] = temp_dict[col][dict_index]
-      col_index += 1
-    return final_array
+    arr_transpose = []
+    print(self.columns)
+    for variable_name in self.columns:
+      arr_transpose.append(self.data_dict[variable_name])
+    arr_matrix = Matrix(arr_transpose)
+    arr_mat_transpose = arr_matrix.transpose()
+    return arr_mat_transpose.elements
+    
+    
+    
+    
+    
+    # temp_dict = self.data_dict
+    # col_index = 0
+    # col_len = len(temp_dict[self.columns[0]])
+    # final_array = [[0 for col in self.columns] for row in range(col_len)]
+    # for col in self.columns:
+    #   for dict_index in range(len(temp_dict[col])):
+    #     final_array[dict_index][col_index] = temp_dict[col][dict_index]
+    #   col_index += 1
+    # return final_array
 
   def select_columns(self, columns):
     dictionary = self.data_dict
@@ -32,15 +48,20 @@ class DataFrame:
     final_dict[name] = [funct(num) for num in prev_list]
     return DataFrame(final_dict, self.columns)
 
-  
-  def create_interaction_terms(self, columns):
+  def create_interaction_terms(self, col_1, col_2):
     product_column = []
-    selected_columns = DataFrame(self.select_columns(columns))
-    for row in range(len(selected_columns[0])):
-      product = selected_columns[0][row]*selected_columns[1]
+    df_array = self.to_array()
+    selected_columns = self.select_columns([col_1, col_2])
+    column_array = selected_columns.to_array()
 
-
-
+    for row in range(len(column_array[0][0])):
+      product = column_array[0][0][row]*column_array[0][1][row]
+      product_column.append(product)
+    df_array.append(product_column)
+    column_list = self.columns+[str(col_1+' * '+col_2)]
+    return DataFrame(df_array, column_list)
+    
+    
 
 
 
@@ -67,5 +88,6 @@ class DataFrame:
     with open(path_to_datasets + filename, "r") as file:
       csv = file.split('\n')
       print(csv)
+
 
 
