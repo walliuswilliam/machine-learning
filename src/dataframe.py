@@ -32,6 +32,18 @@ class DataFrame:
     final_dict[name] = [funct(num) for num in prev_list]
     return DataFrame(final_dict, self.columns)
 
+  
+  def create_interaction_terms(self, columns):
+    product_column = []
+    selected_columns = DataFrame(self.select_columns(columns))
+    for row in range(len(selected_columns[0])):
+      product = selected_columns[0][row]*selected_columns[1]
+
+
+
+
+
+
   @classmethod
   def from_array(cls, arr, columns):
     data_dict = {columns[key]:[[arr[i][key] for i in range(len(arr))]] for key in range(len(columns))}
