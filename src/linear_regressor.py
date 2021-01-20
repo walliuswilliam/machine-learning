@@ -13,16 +13,22 @@ class LinearRegressor:
   def calculate_coefficients(self):
     final_dict = {}
     dict_data = self.df.data_dict
+    print('dict_data', dict_data)
 
     observations_of_a_variable = list(dict_data.values())[0] # [obs1, obs2, obs3, ...] - initialize matrix elements with a row of 1s
+    print('observations_of_a_variable', observations_of_a_variable)
     row_of_1s = [1 for _ in observations_of_a_variable] 
+    print(row_of_1s)
     mat_elements = [row_of_1s]
 
     # add the rows of observations for the independent_variables
     for variable_name in dict_data:
+      print('variable_name', variable_name)
       if variable_name != self.dependent_variable:
-        observations = dict_data[variable_name][0]
+        observations = dict_data[variable_name]
+        print(observations)
         mat_elements.append(observations)
+    print('mat', mat_elements)
     mat = Matrix(mat_elements)
     print(mat.elements)
     mat = mat.transpose()
@@ -34,7 +40,7 @@ class LinearRegressor:
     mat_mult = mat_t.matrix_multiply(mat)
     mat_inv = mat_mult.inverse()
     mat_pseudoinv = mat_inv.matrix_multiply(mat_t)
-    y = [[num] for num in list(dict_data.values())[-1][0]]
+    y = [[num] for num in list(dict_data.values())[-1]]
     y_mat = mat_pseudoinv.matrix_multiply(Matrix(y))
 
     for coefficient_index in range(len(y_mat.elements)):
