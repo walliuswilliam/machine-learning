@@ -14,7 +14,7 @@ class LinearRegressor:
     final_dict = {}
     dict_data = self.df.data_dict
 
-    observations_of_a_variable = list(dict_data.values())[0][0] # [obs1, obs2, obs3, ...] - initialize matrix elements with a row of 1s
+    observations_of_a_variable = list(dict_data.values())[0] # [obs1, obs2, obs3, ...] - initialize matrix elements with a row of 1s
     row_of_1s = [1 for _ in observations_of_a_variable] 
     mat_elements = [row_of_1s]
 
@@ -24,6 +24,7 @@ class LinearRegressor:
         observations = dict_data[variable_name][0]
         mat_elements.append(observations)
     mat = Matrix(mat_elements)
+    print(mat.elements)
     mat = mat.transpose()
     
     # mat * beta = y
