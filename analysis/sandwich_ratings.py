@@ -57,3 +57,7 @@ print('passed to_array')
 regressor = LinearRegressor(df, dependent_variable='rating')
 
 print(regressor.coefficients)
+
+print(regressor.predict({'beef': 5, 'pb': 0, 'beef * pb': 0}))
+
+print(regressor.predict({'beef': 5, 'pb': 5, 'beef * pb': 25}))

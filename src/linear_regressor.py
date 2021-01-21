@@ -46,5 +46,9 @@ class LinearRegressor:
 
     return final_dict
 
-  def predict(self, h_worked):
-    return round(self.coefficients[0] + list(h_worked.values())[0]*self.coefficients[1], 5)
+  def predict(self, input_dict):
+    prediction = self.coefficients['constant']
+    for coefficient in self.coefficients:
+      if coefficient in input_dict.keys():
+        prediction += self.coefficients[coefficient]*input_dict[coefficient]
+    return prediction
