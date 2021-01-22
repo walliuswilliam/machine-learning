@@ -11,5 +11,6 @@ df = DataFrame.from_array(
 )
 
 log_reg = LogisticRegressor(df, dependent_variable = 'y')
-assert log_reg.predict({'x': 5}) == 0.777, log_reg.predict({'x': 5})
+print(log_reg.coefficients)
+assert round(log_reg.predict({'x': 5}), 3) == 0.777, log_reg.predict({'x': 5})
 print('passed')

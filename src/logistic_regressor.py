@@ -14,21 +14,23 @@ class LogisticRegressor:
 
   def calc_coefficients(self):
     dict_data = self.df.data_dict
-    independent_variable = self.independent_variables[0]
-    transformed_mat = [[value] for value in dict_data[independent_variable]]
-    y_list = []
-    print(transformed_mat)
-    for variable in dict_data:
-      if variable == self.dependent_variable:
-        variable_list = dict_data[variable]
-        for value in variable_list:
-          y_transformed = math.log((1/value)-1)
-          y_list.append(y_transformed)
+    dependent_var_column = dict_data[self.dependent_variable]
 
-    for y_index in range(len(y_list)):
-      transformed_mat[y_index].append(y_list[y_index])
-    print(transformed_mat)
+    for value_index in range(len(dependent_var_column)):
+      y_transformed = math.log((1/dependent_var_column[value_index])-1)
+      dict_data[self.dependent_variable][value_index] = y_transformed
 
+    logistic_df = DataFrame(dict_data, [key for key in dict_data]) #column_order
+    regressor = LinearRegressor(logistic_df, dependent_variable=self.dependent_variable)
+    return regressor.coefficients
+
+  def predict(self, input_dict):
+    prediction = self.coefficients['constant']
+    for coefficient in self.coefficients:
+      if coefficient in input_dict.keys():
+        prediction += self.coefficients[coefficient]*input_dict[coefficient]
+    return 1/(1+math.e**prediction)
+    
     
 
 
