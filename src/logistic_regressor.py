@@ -6,18 +6,20 @@ from linear_regressor import LinearRegressor
 import math
 
 class LogisticRegressor:
-  def __init__(self, df, dependent_variable):
+  def __init__(self, df, dependent_variable, upper_bound):
     self.df = df
+    self.upper_bound = upper_bound
     self.dependent_variable = dependent_variable
     self.independent_variables = [x for x in self.df.columns if x != self.dependent_variable]
     self.coefficients = self.calc_coefficients()
+  
 
   def calc_coefficients(self):
     dict_data = self.df.data_dict
     dependent_var_column = dict_data[self.dependent_variable]
 
     for value_index in range(len(dependent_var_column)):
-      y_transformed = math.log((1/dependent_var_column[value_index])-1)
+      y_transformed = math.log((self.upper_bound/dependent_var_column[value_index])-1)
       dict_data[self.dependent_variable][value_index] = y_transformed
 
     logistic_df = DataFrame(dict_data, [key for key in dict_data]) #column_order
@@ -29,7 +31,7 @@ class LogisticRegressor:
     for coefficient in self.coefficients:
       if coefficient in input_dict.keys():
         prediction += self.coefficients[coefficient]*input_dict[coefficient]
-    return 1/(1+math.e**prediction)
+    return self.upper_bound/(1+math.e**prediction)
     
     
 
