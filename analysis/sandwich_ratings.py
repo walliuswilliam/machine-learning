@@ -1,6 +1,7 @@
 import sys
 sys.path.append('src')
 from linear_regressor import LinearRegressor
+from logistic_regressor import LogisticRegressor
 from dataframe import DataFrame
 
 # df = DataFrame.from_array(
@@ -22,6 +23,47 @@ from dataframe import DataFrame
 # print(regressor.coefficients)
 
 
+# df = DataFrame.from_array(
+#     [[0, 0, 1], 
+#     [1, 0, 2], 
+#     [2, 0, 4], 
+#     [4, 0, 8], 
+#     [6, 0, 9], 
+#     [0, 2, 2], 
+#     [0, 4, 5], 
+#     [0, 6, 7], 
+#     [0, 8, 6],
+#     [2, 2, 0],
+#     [3, 4, 0]],
+#     columns = ['beef', 'pb', 'rating']
+# )
+
+# df = df.create_interaction_terms('beef', 'pb')
+
+# assert df.columns == ['beef', 'pb', 'rating', 'beef * pb']
+# print('passed columns')
+# assert df.to_array() == [[0, 0, 1, 0], 
+#     [1, 0, 2, 0], 
+#     [2, 0, 4, 0], 
+#     [4, 0, 8, 0], 
+#     [6, 0, 9, 0], 
+#     [0, 2, 2, 0], 
+#     [0, 4, 5, 0], 
+#     [0, 6, 7, 0], 
+#     [0, 8, 6, 0],
+#     [2, 2, 0, 4],
+#     [3, 4, 0, 12]], df.to_array
+# print('passed to_array')
+
+# regressor = LinearRegressor(df, dependent_variable='rating')
+
+# print(regressor.coefficients)
+
+# print(regressor.predict({'beef': 5, 'pb': 0, 'beef * pb': 0}))
+
+# print(regressor.predict({'beef': 5, 'pb': 5, 'beef * pb': 25}))
+
+
 df = DataFrame.from_array(
     [[0, 0, 1], 
     [1, 0, 2], 
@@ -32,32 +74,19 @@ df = DataFrame.from_array(
     [0, 4, 5], 
     [0, 6, 7], 
     [0, 8, 6],
-    [2, 2, 0],
-    [3, 4, 0]],
+    [2, 2, 0.1],
+    [3, 4, 0.1]],
     columns = ['beef', 'pb', 'rating']
 )
 
 df = df.create_interaction_terms('beef', 'pb')
 
-assert df.columns == ['beef', 'pb', 'rating', 'beef * pb']
-print('passed columns')
-assert df.to_array() == [[0, 0, 1, 0], 
-    [1, 0, 2, 0], 
-    [2, 0, 4, 0], 
-    [4, 0, 8, 0], 
-    [6, 0, 9, 0], 
-    [0, 2, 2, 0], 
-    [0, 4, 5, 0], 
-    [0, 6, 7, 0], 
-    [0, 8, 6, 0],
-    [2, 2, 0, 4],
-    [3, 4, 0, 12]], df.to_array
-print('passed to_array')
-
-regressor = LinearRegressor(df, dependent_variable='rating')
+regressor = LogisticRegressor(df, dependent_variable='rating', upper_bound=10)
 
 print(regressor.coefficients)
 
 print(regressor.predict({'beef': 5, 'pb': 0, 'beef * pb': 0}))
+
+print(regressor.predict({'beef': 12, 'pb': 0, 'beef * pb': 0}))
 
 print(regressor.predict({'beef': 5, 'pb': 5, 'beef * pb': 25}))
