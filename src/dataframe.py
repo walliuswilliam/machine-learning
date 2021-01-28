@@ -46,6 +46,26 @@ class DataFrame:
 
     column_list = self.columns+[str(col_1+' * '+col_2)]
     return DataFrame.from_array(df_array, column_list)
+
+  def create_dummy_variables(self, variable):
+    for variable_list in self.data_dict[variable]:
+      dummy_variables = [var for var in variable_list]
+
+    for dummy_variable in dummy_variables:
+      dummy_values = [(1 if dummy_variable in dummy_list else 0) for dummy_list in self.data_dict[variable]]
+      self.data_dict[dummy_variable] = dummy_values
+
+    variable_index = self.columns.index(variable)
+    for dum_variable in reversed(dummy_variables):
+      self.columns.insert(variable_index, dum_variable)
+    self.columns.remove(variable)
+    
+    del self.data_dict[variable]
+    return DataFrame(self.data_dict, self.columns)
+ 
+
+
+
     
 
   @classmethod
