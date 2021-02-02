@@ -1,7 +1,9 @@
 import random
 
 def show_board(locations):
-  board = '........\n........\n........\n........\n........\n........\n........\n........'
+  board = ''
+  for num in range(8):
+    board += '........\n'
   for point in range(len(locations)):
     point_on_board = locations[point][0]*9+locations[point][1]
     board = board[:point_on_board] + str(point) + board[point_on_board+1:]
@@ -58,16 +60,12 @@ def random_optimizer(n):
 print('showing board...')
 locations = [(0,0), (6,1), (2,2), (5,3), (4,4), (7,5), (1,6), (2,6)]
 print(show_board(locations))
-print('')
 
-print('calculating cost...')
+print('\ncalculating cost...')
 assert calc_cost(locations) == 10
 print('passed')
-print('')
 
-print('testing random_optimizer on n_vals...')
+print('\ntesting random_optimizer on n_vals...')
 n_vals = [10, 50, 100, 500, 1000]
 for n in n_vals:
   print('n =', n, ':', random_optimizer(n))
-
-

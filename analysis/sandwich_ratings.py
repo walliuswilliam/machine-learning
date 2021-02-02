@@ -93,7 +93,7 @@ from dataframe import DataFrame
 
 
 #Linear Regressor
-print('Linear Regressor')
+# print('Linear Regressor')
 
 df = DataFrame.from_array(
     [[0, 0, [],               1],
@@ -123,25 +123,25 @@ df = df.create_interaction_terms('pb', 'mayo',)
 df = df.create_interaction_terms('pb', 'jelly')
 df = df.create_interaction_terms('mayo', 'jelly')
 
-regressor = LinearRegressor(df, dependent_variable='rating')
+linear_regressor = LinearRegressor(df, dependent_variable='rating')
 
-print('Coefficients', regressor.coefficients)
-
-
-print('8 beef, mayo', regressor.predict({'beef': 8, 'pb': 0, 'mayo': 1, 'jelly': 0, 'beef * pb': 0, 'beef * mayo': 8, 'beef * jelly': 0, 'pb * mayo': 0, 'pb * jelly': 0, 'mayo * jelly': 0}))
-
-print('4 pb, jelly', regressor.predict({'beef': 0, 'pb': 4, 'mayo': 0, 'jelly': 1, 'beef * pb': 0, 'beef * mayo': 0, 'beef * jelly': 0, 'pb * mayo': 0, 'pb * jelly': 4, 'mayo * jelly': 0}))
-
-print('4 pb, mayo', regressor.predict({'beef': 0, 'pb': 4, 'mayo': 1, 'jelly': 0, 'beef * pb': 0, 'beef * mayo': 0, 'beef * jelly': 0, 'pb * mayo': 4, 'pb * jelly': 0, 'mayo * jelly': 0}))
-
-print('4 pb, 8 beef, mayo', regressor.predict({'beef': 8, 'pb': 4, 'mayo': 1, 'jelly': 0, 'beef * pb': 32, 'beef * mayo': 8, 'beef * jelly': 0, 'pb * mayo': 4, 'pb * jelly': 0, 'mayo * jelly': 0}))
-
-print('8 beef, mayo, jelly', regressor.predict({'beef': 8, 'pb': 0, 'mayo': 1, 'jelly': 1, 'beef * pb': 0, 'beef * mayo': 8, 'beef * jelly': 8, 'pb * mayo': 0, 'pb * jelly': 0, 'mayo * jelly': 1}))
+# print('Coefficients', linear_regressor.coefficients)
 
 
+# print('8 beef, mayo', linear_regressor.predict({'beef': 8, 'pb': 0, 'mayo': 1, 'jelly': 0, 'beef * pb': 0, 'beef * mayo': 8, 'beef * jelly': 0, 'pb * mayo': 0, 'pb * jelly': 0, 'mayo * jelly': 0}))
 
-#Logistic Regressor
-print('\nLogistic Regressor')
+# print('4 pb, jelly', linear_regressor.predict({'beef': 0, 'pb': 4, 'mayo': 0, 'jelly': 1, 'beef * pb': 0, 'beef * mayo': 0, 'beef * jelly': 0, 'pb * mayo': 0, 'pb * jelly': 4, 'mayo * jelly': 0}))
+
+# print('4 pb, mayo', linear_regressor.predict({'beef': 0, 'pb': 4, 'mayo': 1, 'jelly': 0, 'beef * pb': 0, 'beef * mayo': 0, 'beef * jelly': 0, 'pb * mayo': 4, 'pb * jelly': 0, 'mayo * jelly': 0}))
+
+# print('4 pb, 8 beef, mayo', linear_regressor.predict({'beef': 8, 'pb': 4, 'mayo': 1, 'jelly': 0, 'beef * pb': 32, 'beef * mayo': 8, 'beef * jelly': 0, 'pb * mayo': 4, 'pb * jelly': 0, 'mayo * jelly': 0}))
+
+# print('8 beef, mayo, jelly', linear_regressor.predict({'beef': 8, 'pb': 0, 'mayo': 1, 'jelly': 1, 'beef * pb': 0, 'beef * mayo': 8, 'beef * jelly': 8, 'pb * mayo': 0, 'pb * jelly': 0, 'mayo * jelly': 1}))
+
+
+
+# #Logistic Regressor
+# print('\nLogistic Regressor')
 
 df = DataFrame.from_array(
     [[0, 0, [],               1],
@@ -171,17 +171,39 @@ df = df.create_interaction_terms('pb', 'mayo',)
 df = df.create_interaction_terms('pb', 'jelly')
 df = df.create_interaction_terms('mayo', 'jelly')
 
-regressor = LogisticRegressor(df, dependent_variable='rating', upper_bound=10)
+logistic_regressor = LogisticRegressor(df, dependent_variable='rating', upper_bound=10)
 
-print('Coefficients', regressor.coefficients)
+# print('Coefficients', logistic_regressor.coefficients)
 
 
-print('8 beef, mayo', regressor.predict({'beef': 8, 'pb': 0, 'mayo': 1, 'jelly': 0, 'beef * pb': 0, 'beef * mayo': 8, 'beef * jelly': 0, 'pb * mayo': 0, 'pb * jelly': 0, 'mayo * jelly': 0}))
+# print('8 beef, mayo', logistic_regressor.predict({'beef': 8, 'pb': 0, 'mayo': 1, 'jelly': 0, 'beef * pb': 0, 'beef * mayo': 8, 'beef * jelly': 0, 'pb * mayo': 0, 'pb * jelly': 0, 'mayo * jelly': 0}))
 
-print('4 pb, jelly', regressor.predict({'beef': 0, 'pb': 4, 'mayo': 0, 'jelly': 1, 'beef * pb': 0, 'beef * mayo': 0, 'beef * jelly': 0, 'pb * mayo': 0, 'pb * jelly': 4, 'mayo * jelly': 0}))
+# print('4 pb, jelly', logistic_regressor.predict({'beef': 0, 'pb': 4, 'mayo': 0, 'jelly': 1, 'beef * pb': 0, 'beef * mayo': 0, 'beef * jelly': 0, 'pb * mayo': 0, 'pb * jelly': 4, 'mayo * jelly': 0}))
 
-print('4 pb, mayo', regressor.predict({'beef': 0, 'pb': 4, 'mayo': 1, 'jelly': 0, 'beef * pb': 0, 'beef * mayo': 0, 'beef * jelly': 0, 'pb * mayo': 4, 'pb * jelly': 0, 'mayo * jelly': 0}))
+# print('4 pb, mayo', logistic_regressor.predict({'beef': 0, 'pb': 4, 'mayo': 1, 'jelly': 0, 'beef * pb': 0, 'beef * mayo': 0, 'beef * jelly': 0, 'pb * mayo': 4, 'pb * jelly': 0, 'mayo * jelly': 0}))
 
-print('4 pb, 8 beef, mayo', regressor.predict({'beef': 8, 'pb': 4, 'mayo': 1, 'jelly': 0, 'beef * pb': 32, 'beef * mayo': 8, 'beef * jelly': 0, 'pb * mayo': 4, 'pb * jelly': 0, 'mayo * jelly': 0}))
+# print('4 pb, 8 beef, mayo', logistic_regressor.predict({'beef': 8, 'pb': 4, 'mayo': 1, 'jelly': 0, 'beef * pb': 32, 'beef * mayo': 8, 'beef * jelly': 0, 'pb * mayo': 4, 'pb * jelly': 0, 'mayo * jelly': 0}))
 
-print('8 beef, mayo, jelly', regressor.predict({'beef': 8, 'pb': 0, 'mayo': 1, 'jelly': 1, 'beef * pb': 0, 'beef * mayo': 8, 'beef * jelly': 8, 'pb * mayo': 0, 'pb * jelly': 0, 'mayo * jelly': 1}))
+# print('8 beef, mayo, jelly', logistic_regressor.predict({'beef': 8, 'pb': 0, 'mayo': 1, 'jelly': 1, 'beef * pb': 0, 'beef * mayo': 8, 'beef * jelly': 8, 'pb * mayo': 0, 'pb * jelly': 0, 'mayo * jelly': 1}))
+
+
+
+print('testing observation 1...')
+observation = {'beef': 8, 'mayo': 1}
+assert round(linear_regressor.predict(observation), 2) == 11.34
+assert round(logistic_regressor.predict(observation), 2) == 9.72
+print('passed')
+
+print('testing observation 2...')
+# test 4 tbsp of pb + 8 slices of beef + mayo
+observation = {'beef': 8, 'pb': 4, 'mayo': 1}
+assert round(linear_regressor.predict(observation), 2) == 3.62
+assert round(logistic_regressor.predict(observation), 2) == 0.77
+print('passed')
+
+print('testing observation 3...')
+# test 8 slices of beef + mayo + jelly
+observation = {'beef': 8, 'mayo': 1, 'jelly': 1}
+assert round(linear_regressor.predict(observation), 2) == 2.79
+assert round(logistic_regressor.predict(observation), 2) == 0.79
+print('passed')

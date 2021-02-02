@@ -47,6 +47,13 @@ class LinearRegressor:
     return final_dict
 
   def predict(self, input_dict):
+    for variable in self.independent_variables:
+      if '*' not in variable and variable not in input_dict:
+        input_dict[variable] = 0
+      if ' * ' in variable:
+        interaction_terms = variable.split(' * ')
+        input_dict[variable] = input_dict[interaction_terms[0]]*input_dict[interaction_terms[1]]
+    
     prediction = self.coefficients['constant']
     for coefficient in self.coefficients:
       if coefficient in input_dict.keys():
