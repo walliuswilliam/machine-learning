@@ -30,11 +30,11 @@ class LinearRegressor:
     # (mat_t * mat) * beta = mat_t * y
     # beta = (mat_t * mat)^-1 * mat_t * y
     mat_t = mat.transpose()
-    mat_mult = mat_t.matrix_multiply(mat)
+    mat_mult = mat_t @ mat #matrix multiply
     mat_inv = mat_mult.inverse()
-    mat_pseudoinv = mat_inv.matrix_multiply(mat_t)
+    mat_pseudoinv = mat_inv @ mat_t #matrix multiply
     y = [[num] for num in dict_data[self.dependent_variable]]
-    y_mat = mat_pseudoinv.matrix_multiply(Matrix(y)) #coefficients
+    y_mat = mat_pseudoinv @ Matrix(y) #coefficients
 
 
     for coefficient_index in range(len(y_mat.elements)):
