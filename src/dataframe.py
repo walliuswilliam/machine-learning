@@ -65,9 +65,6 @@ class DataFrame:
  
 
 
-
-    
-
   @classmethod
   def from_array(cls, arr, columns):
     data_dict = {columns[key]:[arr[i][key] for i in range(len(arr))] for key in range(len(columns))}
@@ -91,6 +88,3 @@ class DataFrame:
     with open(path_to_datasets + filename, "r") as file:
       csv = file.split('\n')
       print(csv)
-
-
-

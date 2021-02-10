@@ -38,7 +38,7 @@ class LogisticRegressor:
     for coefficient in self.coefficients:
       if coefficient in input_dict.keys():
         prediction += self.coefficients[coefficient]*input_dict[coefficient]
-    return self.upper_bound/(1+math.e**prediction)
+    return self.upper_bound/(1+math.exp(prediction))
     
     
 
