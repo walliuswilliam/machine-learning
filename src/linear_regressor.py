@@ -34,16 +34,14 @@ class LinearRegressor:
     mat_inv = mat_mult.inverse()
     mat_pseudoinv = mat_inv @ mat_t #matrix multiply
     y = [[num] for num in dict_data[self.dependent_variable]]
-    y_mat = mat_pseudoinv @ Matrix(y) #coefficients
 
+    coefficients = (mat_pseudoinv @ Matrix(y)).transpose().elements[0]
+    final_dict = {'constant' :  coefficients[0]}
 
-    for coefficient_index in range(len(y_mat.elements)):
-      if coefficient_index == 0:
-        key = 'constant'
-      else:
-        key = self.independent_variables[coefficient_index-1] #constant takes up first spot, everything shifts over one index
-      final_dict[key] = [coefficient[0] for coefficient in y_mat.elements][coefficient_index]
-
+    for coefficient_index in range(len(self.independent_variables)):
+      key = self.independent_variables[coefficient_index]
+      final_dict[key] = coefficients[coefficient_index + 1]
+      
     return final_dict
 
   def predict(self, input_dict):
