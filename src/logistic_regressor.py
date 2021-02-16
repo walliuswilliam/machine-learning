@@ -22,7 +22,7 @@ class LogisticRegressor:
       y_transformed = math.log((self.upper_bound/dependent_var_column[value_index])-1)
       dict_data[self.dependent_variable][value_index] = y_transformed
 
-    logistic_df = DataFrame(dict_data, [key for key in dict_data]) #column_order
+    logistic_df = DataFrame(dict_data, self.df.columns)
     regressor = LinearRegressor(logistic_df, dependent_variable=self.dependent_variable)
     return regressor.coefficients
 
