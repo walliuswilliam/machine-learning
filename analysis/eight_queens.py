@@ -39,6 +39,13 @@ def calc_cost(locations):
   for point in locations:
     total_cost += col_row_checker(point, locations)
   total_cost += diagonal_checker(locations)
+  
+  for point_index_1 in range(len(locations)):
+    for point_index_2 in range(len(locations)):
+      if point_index_1 != point_index_2:
+        if locations[point_index_1][0] == locations[point_index_2][0] and locations[point_index_1][1] == locations[point_index_1][1]:
+          total_cost += 1
+
   return total_cost
 
 
@@ -56,16 +63,18 @@ def random_optimizer(n):
       min_cost = test_cost
   return  {'locations': min_location, 'cost': min_cost}
 
-  
-print('showing board...')
-locations = [(0,0), (6,1), (2,2), (5,3), (4,4), (7,5), (1,6), (2,6)]
-print(show_board(locations))
 
-print('\ncalculating cost...')
-assert calc_cost(locations) == 10
-print('passed')
+if __name__ == "__main__":
+  print('showing board...')
+  locations = [(0,0), (6,1), (2,2), (5,3), (4,4), (7,5), (1,6), (2,6)]
+  print(show_board(locations))
 
-print('\ntesting random_optimizer on n_vals...')
-n_vals = [10, 50, 100, 500, 1000]
-for n in n_vals:
-  print('n =', n, ':', random_optimizer(n))
+  print('\ncalculating cost...')
+  assert calc_cost(locations) == 10
+  print('passed')
+
+  print('\ntesting random_optimizer on n_vals...')
+  n_vals = [10, 50, 100, 500, 1000]
+  for n in n_vals:
+    print('n =', n, ':', random_optimizer(n))
+
