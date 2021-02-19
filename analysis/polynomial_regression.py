@@ -34,8 +34,6 @@ for point_index in range(len(df)):
   x = df[point_index][0]
   df[point_index] = (x, x**2, x**3, df[point_index][1])
 
-print(df)
-
 df = DataFrame.from_array(df, columns = ['x', 'x^2', 'x^3', 'y'])
 
 regressor = LinearRegressor(df, dependent_variable='y')

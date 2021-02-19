@@ -63,7 +63,8 @@ class DataFrame:
     del self.data_dict[variable]
     return DataFrame(self.data_dict, self.columns)
  
-
+  def copy(self):
+    return DataFrame(self.data_dict.copy(), self.columns.copy())
 
   @classmethod
   def from_array(cls, arr, columns):
