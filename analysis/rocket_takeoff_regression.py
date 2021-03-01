@@ -4,8 +4,7 @@ from polynomial_regressor import PolynomialRegressor
 from dataframe import DataFrame
 import matplotlib.pyplot as plt
 
-
-df = DataFrame.from_array([
+data = [
   (1, 3.1),
   (2, 10.17),
   (3, 20.93),
@@ -15,7 +14,9 @@ df = DataFrame.from_array([
   (7, 113.92),
   (8, 146.95),
   (9, 190.09),
-  (10, 232.65)],
+  (10, 232.65)]
+
+df = DataFrame.from_array(data,
   columns = ['Time', 'Distance'])
 
 quadratic_regressor = PolynomialRegressor(degree=2)
@@ -44,7 +45,6 @@ for second in range(201):
   quadratic_y.append(quadratic_regressor.predict({'Time': second}))
 plt.plot(quadratic_x, quadratic_y)
 
-plt.style.use('bmh')
 cubic_x = []
 cubic_y = []
 for second in range(201):
@@ -52,7 +52,7 @@ for second in range(201):
   cubic_y.append(cubic_regressor.predict({'Time': second}))
 plt.plot(cubic_x, cubic_y)
 
-plt.legend(['Quadratic','Cubic'])
 
+plt.legend(['Quadratic','Cubic'])
 plt.title('Rocket Takeoff')
 plt.savefig('analysis/rocket.png')
