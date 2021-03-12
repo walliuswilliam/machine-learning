@@ -85,7 +85,26 @@ class DataFrame:
           dict_rows[key].append(value)
     return DataFrame(dict_rows, self.columns)
 
-  def from_csv(path_to_csv, header=True):
-    with open(path_to_datasets + filename, "r") as file:
-      csv = file.split('\n')
-      print(csv)
+  @classmethod
+  def from_csv(cls, path_to_csv, data_types, parser=None, columns=None):
+    with open(path_to_csv, "r") as file:
+        lines = file.read().split('\n')
+        if columns == None:
+          columns = lines[0].split(',')
+          lines = lines[1:]
+        arr = []
+        for line in lines:
+          if len(line) > 0:
+            str_entries = parser(line)
+            entries = []
+            for i, str_entry in enumerate(str_entries):
+              col_name = columns[i]
+              data_type = data_types[col_name]
+              if str_entry != '':
+                entry = data_type(str_entry)
+              else:
+                entry = None
+              entries.append(entry)
+            arr.append(entries)
+    return cls.from_array(arr, columns)
+  
