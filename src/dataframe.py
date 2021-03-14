@@ -29,10 +29,10 @@ class DataFrame:
       final_dict[key] = [self.data_dict[key][num] for num in rows]
     return DataFrame(final_dict, self.columns)
 
-  def apply(self, name, funct):
+  def apply(self, key, funct):
     final_dict = self.data_dict
-    prev_list = self.data_dict[name]
-    final_dict[name] = [funct(num) for num in prev_list]
+    prev_list = self.data_dict[key]
+    final_dict[key] = [funct(num) for num in prev_list]
     return DataFrame(final_dict, self.columns)
 
   def create_interaction_terms(self, col_1, col_2):
@@ -88,23 +88,23 @@ class DataFrame:
   @classmethod
   def from_csv(cls, path_to_csv, data_types, parser=None, columns=None):
     with open(path_to_csv, "r") as file:
-        lines = file.read().split('\n')
-        if columns == None:
-          columns = lines[0].split(',')
-          lines = lines[1:]
-        arr = []
-        for line in lines:
-          if len(line) > 0:
-            str_entries = parser(line)
-            entries = []
-            for i, str_entry in enumerate(str_entries):
-              col_name = columns[i]
-              data_type = data_types[col_name]
-              if str_entry != '':
-                entry = data_type(str_entry)
-              else:
-                entry = None
-              entries.append(entry)
-            arr.append(entries)
+      lines = file.read().split('\n')
+      if columns == None:
+        columns = lines[0].split(',')
+        lines = lines[1:]
+      arr = []
+      for line in lines:
+        if len(line) > 0:
+          str_entries = parser(line)
+          entries = []
+          for i, str_entry in enumerate(str_entries):
+            col_name = columns[i]
+            data_type = data_types[col_name]
+            if str_entry != '':
+              entry = data_type(str_entry)
+            else:
+              entry = None
+            entries.append(entry)
+          arr.append(entries)
     return cls.from_array(arr, columns)
   
