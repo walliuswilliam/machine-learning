@@ -17,7 +17,7 @@ class DataFrame:
     arr_mat_transpose = arr_matrix.transpose()
     return arr_mat_transpose.elements
 
-  def select_columns(self, columns):
+  def select(self, columns):
     dictionary = self.data_dict
     temp_dict = {key:dictionary[key] for key in self.columns}
     final_dict = DataFrame(temp_dict, columns)
@@ -75,7 +75,7 @@ class DataFrame:
     row_to_dict = {self.columns[index]:row[index] for index in range(len(row))}
     return row_to_dict
   
-  def select_rows_where(self, funct):
+  def where(self, funct):
     dict_rows = {self.columns[i]:[] for i in range(len(self.columns))}
     rows = [self.convert_row_from_array_to_dict(row_index) for row_index in self.to_array()]
     
@@ -84,6 +84,84 @@ class DataFrame:
         for key, value in row.items():
           dict_rows[key].append(value)
     return DataFrame(dict_rows, self.columns)
+
+  def order_by(self, column, ascending=True):
+    df_array = self.to_array()
+    column_index = self.columns.index(column)
+    df_array.sort(key = lambda x: x[column_index], reverse= not ascending)
+    return DataFrame.from_array(df_array, self.columns)
+
+  def group_by(self, column):
+    unique_elements = []
+    final_list = []
+    df_array = self.to_array()
+    column_index = self.columns.index(column)
+
+    for row in df_array:
+      if row[column_index] not in unique_elements:
+        unique_elements.append(row[column_index])
+
+    for element in unique_elements:
+      instances = []
+      grouped_list = [[] for column in self.columns]
+      for row in df_array:
+        if row[column_index] == element:
+          instances.append(df_array.index(row))
+      for instance in instances:
+        row = df_array[instance]
+        count = 0
+        for entry in row:
+          grouped_list[count].append(entry)
+          count += 1
+      grouped_list[column_index] = element
+      final_list.append(grouped_list)
+      
+    return DataFrame.from_array(final_list, self.columns)
+      
+
+  def aggregate(self, col_name, how):
+    arr = self.to_array()
+    col_index = self.columns.index(col_name)
+
+    if how == 'count':
+      for row in arr:
+        for entry_index in range(len(row)):
+          if entry_index == col_index:
+            row[col_index] = len(row[col_index])
+      return DataFrame.from_array(arr, self.columns)
+
+    elif how == 'max':
+      for row in arr:
+        for entry_index in range(len(row)):
+          if entry_index == col_index:
+            row[col_index] = max(row[col_index])
+      return DataFrame.from_array(arr, self.columns)
+
+    elif how == 'min':
+      for row in arr:
+        for entry_index in range(len(row)):
+          if entry_index == col_index:
+            row[col_index] = min(row[col_index])
+      return DataFrame.from_array(arr, self.columns)
+
+    elif how == 'sum':
+      for row in arr:
+        for entry_index in range(len(row)):
+          if entry_index == col_index:
+            row[col_index] = sum(row[col_index])
+      return DataFrame.from_array(arr, self.columns)
+
+    elif how == 'avg':
+      for row in arr:
+        for entry_index in range(len(row)):
+          if entry_index == col_index:
+            row[col_index] = sum(row[col_index])/len(row[col_index])
+      return DataFrame.from_array(arr, self.columns)
+    
+    
+
+
+    
 
   @classmethod
   def from_csv(cls, path_to_csv, data_types, parser=None, columns=None):
