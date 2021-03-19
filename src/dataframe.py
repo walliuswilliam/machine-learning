@@ -20,8 +20,7 @@ class DataFrame:
   def select(self, columns):
     dictionary = self.data_dict
     temp_dict = {key:dictionary[key] for key in self.columns}
-    final_dict = DataFrame(temp_dict, columns)
-    return final_dict
+    return DataFrame(temp_dict, columns)
 
   def select_rows(self, rows):
     final_dict = self.data_dict
@@ -158,9 +157,22 @@ class DataFrame:
             row[col_index] = sum(row[col_index])/len(row[col_index])
       return DataFrame.from_array(arr, self.columns)
     
+  def query(self, string):
+    # operations = ['select'] #, 'where', 'order by', 'group by'
+    string = string.replace(',', '')
+    words = string.split(' ')
+
+    if 'SELECT' in words:
+      columns = [word for word in words[words.index('SELECT')+1:]]
+      selected_columns = self.select(columns).to_array()
+      
+    return DataFrame.from_array(selected_columns, columns)
+
+
+      
+
+
     
-
-
     
 
   @classmethod

@@ -110,3 +110,11 @@ assert df.to_array()[:5] == [
   [4, 1, 1, "Futrelle", "female", 35.0, 1, 0, None, 113803, 53.1, "C", 123, "S"],
   [5, 0, 3, "Allen", "male", 35.0, 0, 0, None, 373450, 8.05, None, None, "S"]]
 print('passed')
+
+
+
+
+
+
+print('initial analysis of data...')
+print(df.group_by('Sex').to_array())
