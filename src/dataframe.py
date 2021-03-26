@@ -19,7 +19,7 @@ class DataFrame:
 
   def select(self, columns):
     dictionary = self.data_dict
-    temp_dict = {key:dictionary[key] for key in self.columns}
+    temp_dict = {key:dictionary[key] for key in columns}
     return DataFrame(temp_dict, columns)
 
   def select_rows(self, rows):
@@ -47,8 +47,11 @@ class DataFrame:
     return DataFrame.from_array(df_array, column_list)
 
   def create_dummy_variables(self, variable):
+    dummy_variables = []
     for variable_list in self.data_dict[variable]:
-      dummy_variables = [var for var in variable_list]
+      for var in variable_list:
+        if var not in dummy_variables:
+          dummy_variables.append(var)
 
     for dummy_variable in dummy_variables:
       dummy_values = [(1 if dummy_variable in dummy_list else 0) for dummy_list in self.data_dict[variable]]
@@ -158,22 +161,69 @@ class DataFrame:
       return DataFrame.from_array(arr, self.columns)
     
   def query(self, string):
-    # operations = ['select'] #, 'where', 'order by', 'group by'
-    string = string.replace(',', '')
-    words = string.split(' ')
+    string = string.replace('ORDER BY', 'ORDER_BY')
+    string = string.replace('GROUP BY', 'GROUP_BY')
+    string = string.split()
 
-    if 'SELECT' in words:
-      columns = [word for word in words[words.index('SELECT')+1:]]
-      selected_columns = self.select(columns).to_array()
+    operations = ['SELECT', 'WHERE', 'ORDER_BY', 'GROUP_BY']
+    operation_queries = []
+
+    temp_string = ''
+    count = 0
+    for word in string:
+      if ((count == 0) or (word not in operations)):
+        temp_string += word + ' '
+        count += 1
+
+      else:
+        temp_string = temp_string[:-1]
+        operation_queries.append(temp_string)
+        temp_string = str(word) + ' '
+        count = 0
+
+    temp_string = temp_string[:-1]
+    operation_queries.append(temp_string)
+
+    keyword_to_function = {'SELECT': self.select, 'WHERE': self.where, 'ORDER_BY': self.order_by, 'GROUP_BY': self.group_by}
+
+
+    final_df = None
+    columns = None
+    print(operation_queries)
+
+    for query in operation_queries:
+      query = query.split()
       
-    return DataFrame.from_array(selected_columns, columns)
-
-
+      stripped_list = []
+      for input_query in query[1:]:
+        stripped_list.append(input_query.strip(','))
       
+      function_dict = {'operation': query[0], 'inputs': stripped_list}
+      
+      if function_dict['operation'] == 'ORDER_BY':
+        temp_list = []
+        for input_string in function_dict['inputs']:
+          input_index = function_dict['inputs'].index(input_string)
+          if input_index % 2 == 1:
+            temp_list.append((function_dict['inputs'][input_index-1], input_string))
+        
+        function_dict['inputs'] = temp_list
 
+        for argument in function_dict['inputs']:
+          print(argument, argument[1])
+          if argument[1] == 'DESC':
+            final_df = keyword_to_function[function_dict['operation']](argument[0], ascending=False)
+            print('desc')
+          else:
+            final_df = keyword_to_function[function_dict['operation']](argument[0])
+            print('asc')
+      elif function_dict['operation'] == 'SELECT':
+        columns = function_dict['inputs']
 
-    
-    
+        final_df = keyword_to_function[function_dict['operation']](function_dict['inputs'])
+
+    return DataFrame(final_df.data_dict, columns)
+
 
   @classmethod
   def from_csv(cls, path_to_csv, data_types, parser=None, columns=None):

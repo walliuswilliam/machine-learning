@@ -31,7 +31,7 @@ class PolynomialRegressor:
       self.independent_variables.remove(self.independent_variables[0])
     if self.degree != 0:
       self.independent_variables = [x for x in self.df.columns if x != self.dependent_variable]
-    
+
     self.coefficients = self.calculate_coefficients()
     
 
