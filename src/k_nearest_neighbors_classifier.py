@@ -13,8 +13,6 @@ class KNearestNeighborsClassifier:
     self.dv_index = self.df.columns[0].index(self.dependent_variable)
     self.independent_varibles = [x for x in self.df.columns if x != self.dependent_variable]
 
-
-  
   def compute_distances(self, observation):
     independent_df = self.df[self.independent_varibles].copy()
     distances = []
