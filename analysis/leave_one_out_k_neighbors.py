@@ -30,7 +30,6 @@ df = pd.DataFrame(
     )
 
 
-k=1
 arr_reset = df.to_numpy()
 accuracies = []
 k_list = []
