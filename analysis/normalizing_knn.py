@@ -3,26 +3,14 @@ import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 import matplotlib.pyplot as plt
 
-from warnings import simplefilter
-simplefilter(action='ignore', category=FutureWarning)
-
 
 unnormalized = pd.read_csv('datasets/book_type.csv')
-
-def classify_book(x):
-  if 'adult' in x:
-    return 1
-  else:
-    return 0
-
-unnormalized['book type'] = unnormalized['book type'].apply(classify_book)
+unnormalized['book type'] = unnormalized['book type'].apply(lambda x: 1 if 'adult' in x else 0)
 unnormalized = unnormalized[['book type','num pages','num unique words','avg sentence length','avg word size']]
-
 
 simple_scaling = unnormalized.copy()
 min_max = unnormalized.copy()
 z_score = unnormalized.copy()
-
 
 for column in simple_scaling:
   if column != 'book type':
@@ -50,6 +38,7 @@ for df in df_list:
       arr = arr_reset.copy()
       real_value = arr[row_index][0]
       observation = arr[row_index][1:]
+
       arr = np.delete(arr, row_index, 0)
 
       y = [row[0] for row in arr]
@@ -62,7 +51,6 @@ for df in df_list:
         accuracy += 1
     accuracies.append(accuracy/df.shape[0])
   plt.plot(k_list, accuracies)
-
 
 plt.xlabel('k')
 plt.ylabel('accuracy')
