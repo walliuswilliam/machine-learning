@@ -1,6 +1,6 @@
 import sys
 sys.path.append('src')
-from k_means_clustering import KMeans
+from sklearn.cluster import KMeans
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -37,27 +37,17 @@ def create_clusters(k):
     cluster_dict[(num%k)+1].append(num)
   return cluster_dict
 
-def calc_sum_squared_error(clusters, centers):
-  sum_square = 0
-  for center_index in centers:
-    center_sum = 0
-    for cluster in clusters[center_index]:
-      square_error = np.linalg.norm(np.array(centers[center_index])-np.array(data[cluster]))**2
-      center_sum += square_error
-    sum_square += center_sum
-  return sum_square
-
-
 k_list = []
 error_list = []
 for k in range(1, 6):
-  kmeans = KMeans(create_clusters(k), data)
-  kmeans.run()
-  error = calc_sum_squared_error(kmeans.clusters, kmeans.centers)
+  kmeans = KMeans(n_clusters=k)
+  kmeans.fit(data)
+  error = kmeans.inertia_ 
+  
   k_list.append(k)
   error_list.append(error)
 
 plt.plot(k_list, error_list)
 plt.xlabel('k')
 plt.ylabel('sum squared accuracy')
-plt.savefig('analysis/elbow_clusters.png')
+plt.savefig('analysis/elbow_sklearn.png')
