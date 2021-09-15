@@ -1,5 +1,3 @@
-import sys
-sys.path.append('src')
 from sklearn.cluster import KMeans
 import numpy as np
 import matplotlib.pyplot as plt

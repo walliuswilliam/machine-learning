@@ -23,8 +23,8 @@ class LinearRegressor:
       if variable_name != self.dependent_variable:
         observations = dict_data[variable_name]
         mat_elements.append(observations)
-    mat = Matrix(mat_elements)
-    mat = mat.transpose()
+    mat = Matrix(mat_elements).transpose()
+    print(mat.elements)
     
     # mat * beta = y
     # (mat_t * mat) * beta = mat_t * y

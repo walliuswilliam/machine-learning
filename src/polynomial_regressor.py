@@ -48,8 +48,7 @@ class PolynomialRegressor:
       if variable_name != self.dependent_variable:
         observations = dict_data[variable_name]
         mat_elements.append(observations)
-    mat = Matrix(mat_elements)
-    mat = mat.transpose()    
+    mat = Matrix(mat_elements).transpose()    
     mat_t = mat.transpose()
     mat_mult = mat_t @ mat
     mat_inv = mat_mult.inverse()

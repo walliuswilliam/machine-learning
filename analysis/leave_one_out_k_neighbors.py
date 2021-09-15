@@ -42,7 +42,13 @@ for k in range(1, 19):
     arr = np.delete(arr, row_index, 0)
 
     y = [row[0] for row in arr]
-    x = np.delete(arr, 0, 1)
+    x = np.delete(arr, 0, 1)\
+
+    print(x, '\n')
+    print(y)
+
+    quit()
+
 
     knn = KNeighborsClassifier(n_neighbors=k)
     knn.fit(x, y)
