@@ -1,6 +1,7 @@
 import sys
 sys.path.append('src')
 from neural_net import NeuralNet
+import matplotlib.pyplot as plt
 
 
 data = [(-5,-3),(-4,-1),(-3,1),(-2,2),(-1,-1),(1,-1),(2,1),(3,2),(4,3),(5,4),(6,2),(7,0)]
@@ -24,14 +25,12 @@ for edge in weights:
 
 net = NeuralNet(weights, data, lambda x: max(0,x), 9, [2,5,8])
 
-f_prime = lambda x: 0 if x<=0 else 1
-
-net.gradient_descent(2, f_prime)
-
-
+#print(net.weights,'\n')
+net.gradient_descent(1)
+#print(net.weights)
+quit()
 inputs = [i/100 for i in range(800)]
 outputs = [net.predict(i/100) for i in range(800)]
-
 
 plt.clf()
 plt.style.use('bmh')
@@ -40,10 +39,7 @@ plt.scatter([0,2,5],[5,3,10], label='Datapoints')
 plt.plot(inputs, outputs, label="Initial Regression")
 
 
-
-
-RSS_vals = net.gradient_descent(2000, f_prime, return_rss=True)
-print(net.weights)
+RSS_vals = net.gradient_descent(2000, return_rss=True)
 
 outputs = [net.predict(i/100) for i in range(800)]
 
@@ -52,11 +48,11 @@ plt.xlabel('Inputs')
 plt.ylabel('Outputs')
 plt.legend()
 
-plt.savefig('analysis/net_backprop_output.png')
+plt.savefig('NN_9_neuron_regression.png')
 
 plt.clf()
 plt.title("Neural Network RSS")
 plt.plot([100*i for i in range(20)], RSS_vals)
 plt.xlabel('Number of Iterations')
 plt.ylabel('RSS')
-plt.savefig('analysis/net_backprop_RSS.png')
+plt.savefig('NN_9_neuron_RSS.png')
