@@ -75,7 +75,7 @@ class NeuralNet:
             else:
                 print(f'neuron {neuron.index}\ninput: {neuron.input}\noutput: {neuron.output}\n')
     
-    def set_neuron_gradients(self, point, f_prime):
+    def set_neuron_gradients(self, point):
         self.forward_propagate(point[0])
         neurons = self.neurons.copy()
         neurons.sort(reverse=True, key=lambda x:x.index)
@@ -86,7 +86,7 @@ class NeuralNet:
             else:
                 for child in neuron.children:
                     edge_weight = self.get_weight(child, neuron)
-                    neuron.gradient = child.gradient*f_prime(child.input)*edge_weight #maybe add to val??
+                    neuron.gradient = child.gradient*self.f_prime(child.input)*edge_weight #maybe add to val??
 
     def get_weight(self, neuron1, neuron2):
         for node_pair in self.weights.keys():
@@ -101,18 +101,18 @@ class NeuralNet:
                 total += self.weights[weight_nodes]*parent.output
         return total
 
-    def calc_weight_gradients(self, f_prime):
+    def calc_weight_gradients(self):
         gradients = {key:0 for key in self.weights.keys()}
         for node_pair in self.weights.keys():
             for point in self.data:
-                self.set_neuron_gradients(point, f_prime)
+                self.set_neuron_gradients(point)
                 neurons = [self.get_neuron(x) for x in node_pair]
-                gradients[node_pair] += neurons[1].gradient*f_prime(neurons[1].input)*neurons[0].output
+                gradients[node_pair] += neurons[1].gradient*self.f_prime(neurons[1].input)*neurons[0].output
         return gradients
     
-    def f_prime(self, input):
+    def f_prime(self, x):
         delta = 0.000000001
-        return (self.f(input+delta/2) - self.f(input-delta/2))/delta
+        return (self.actv_func(x+delta/2) - self.actv_func(x-delta/2))/delta
 
     def rss(self):
         rss = 0
@@ -121,10 +121,10 @@ class NeuralNet:
             rss += (output - point[1])**2
         return rss
     
-    def gradient_descent(self, num_iterations, f_prime, alpha=0.0001, return_rss=False):
+    def gradient_descent(self, num_iterations, alpha=0.0001, return_rss=False):
         RSS_vals = []
         for i in range(num_iterations):
-            gradients = self.calc_weight_gradients(f_prime)
+            gradients = self.calc_weight_gradients()
             self.weights = {key:self.weights[key] - alpha*gradients[key] for key in self.weights}
             if i%100 == 0:
                 RSS_vals.append(self.rss())
