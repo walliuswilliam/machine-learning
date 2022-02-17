@@ -24,6 +24,7 @@ for edge in weights:
   weights[edge] = ((-1)**(j+k))*min(j,k)/max(j,k)
 
 net = NeuralNet(weights, data, lambda x: max(0,x), 9, [2,5,8])
+net.change_neuron_actv_func(9, lambda x: x)
 
 print('initial weights\n', net.weights, '\n')
 net.gradient_descent(1)
@@ -39,7 +40,7 @@ plt.scatter([-5,-4,-3,-2,-1,1,2,3,4,5,6,7],[-3,-1,1,2,-1,-1,1,2,3,4,2,0], label=
 plt.plot(inputs, outputs, label="Initial Regression")
 
 
-RSS_vals = net.gradient_descent(2000, return_rss=True)
+RSS_vals = net.gradient_descent(2000, alpha=0.001, return_rss=True)
 
 outputs = [net.predict(i/100) for i in range(800)]
 
@@ -47,7 +48,6 @@ plt.plot(inputs, outputs, label="Final Regression")
 plt.xlabel('Inputs')
 plt.ylabel('Outputs')
 plt.legend()
-
 plt.savefig('NN_9_Neuron_Regression.png')
 
 plt.clf()

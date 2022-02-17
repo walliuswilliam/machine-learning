@@ -1,11 +1,12 @@
 class Neuron:
-    def __init__(self, index, is_bias=False):
+    def __init__(self, index, actv_func, is_bias=False):
         self.parents = []
         self.children = []
         self.index = index
         self.bias = is_bias
         self.input = None
         self.gradient = 0
+        self.actv_func = actv_func
         if is_bias:
             self.output = 1
         else:
@@ -17,7 +18,7 @@ class NeuralNet:
         self.weights = weights
         self.actv_func = actv_func
         self.biases = bias_nodes
-        self.neurons = [Neuron(i) if i not in self.biases else Neuron(i, is_bias=True) for i in range(1,num_neurons+1)]
+        self.neurons = [Neuron(i,self.actv_func) if i not in self.biases else Neuron(i,self.actv_func,is_bias=True) for i in range(1,num_neurons+1)]
         self.root_neuron = None
         self.data = data
         self.set_node_relations()
@@ -36,7 +37,11 @@ class NeuralNet:
             neuron.parents.append(self.get_neuron(nodes[0]))
     
     def set_neuron_output(self, neuron):
-        neuron.output = self.actv_func(neuron.input)
+        neuron.output = neuron.actv_func(neuron.input)
+    
+    def change_neuron_actv_func(self, neuron_index, f):
+        neuron = self.get_neuron(neuron_index)
+        neuron.actv_func = f
 
     def clear_net(self):
         for neuron in self.neurons:
@@ -86,7 +91,7 @@ class NeuralNet:
             else:
                 for child in neuron.children:
                     edge_weight = self.get_weight(child, neuron)
-                    neuron.gradient = child.gradient*self.f_prime(child.input)*edge_weight #maybe add to val??
+                    neuron.gradient = child.gradient*self.f_prime(child.actv_func, child.input)*edge_weight #maybe add to val??
 
     def get_weight(self, neuron1, neuron2):
         for node_pair in self.weights.keys():
@@ -107,12 +112,12 @@ class NeuralNet:
             for point in self.data:
                 self.set_neuron_gradients(point)
                 neurons = [self.get_neuron(x) for x in node_pair]
-                gradients[node_pair] += neurons[1].gradient*self.f_prime(neurons[1].input)*neurons[0].output
+                gradients[node_pair] += neurons[1].gradient*self.f_prime(neurons[1].actv_func, neurons[1].input)*neurons[0].output
         return gradients
     
-    def f_prime(self, x):
+    def f_prime(self, actv_func, x):
         delta = 0.000000001
-        return (self.actv_func(x+delta/2) - self.actv_func(x-delta/2))/delta
+        return (actv_func(x+delta/2) - actv_func(x-delta/2))/delta
 
     def rss(self):
         rss = 0
