@@ -32,7 +32,6 @@ print(net.weights, '\n')
 inputs = [i/100 for i in range(800)]
 outputs = [net.predict(i/100) for i in range(800)]
 
-
 plt.clf()
 plt.style.use('bmh')
 plt.title("Neural Network Regression")
