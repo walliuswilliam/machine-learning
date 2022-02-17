@@ -26,12 +26,11 @@ for edge in weights:
 net = NeuralNet(weights, data, lambda x: max(0,x), 9, [2,5,8])
 net.change_neuron_actv_func(9, lambda x: x)
 
-print('initial weights\n', net.weights, '\n')
 net.gradient_descent(1)
 print(net.weights, '\n')
 
-inputs = [i/100 for i in range(800)]
-outputs = [net.predict(i/100) for i in range(800)]
+inputs = [i/100 for i in range(-1000,1100)]
+outputs = [net.predict(i/100) for i in range(-1000,1100)]
 
 plt.clf()
 plt.style.use('bmh')
@@ -42,7 +41,7 @@ plt.plot(inputs, outputs, label="Initial Regression")
 
 RSS_vals = net.gradient_descent(2000, alpha=0.001, return_rss=True)
 
-outputs = [net.predict(i/100) for i in range(800)]
+outputs = [net.predict(i/100) for i in range(-1000,1100)]
 
 plt.plot(inputs, outputs, label="Final Regression")
 plt.xlabel('Inputs')
