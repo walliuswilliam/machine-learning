@@ -123,11 +123,9 @@ class NeuralNet:
     
     def gradient_descent(self, num_iterations, alpha=0.0001, return_rss=False):
         RSS_vals = []
-        print(self.weights)
         for i in range(num_iterations):
             gradients = self.calc_weight_gradients()
             self.weights = {key:self.weights[key] - alpha*gradients[key] for key in self.weights}
-            print(self.weights)
             if i%100 == 0:
                 RSS_vals.append(self.rss())
         if return_rss:

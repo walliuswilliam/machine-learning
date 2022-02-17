@@ -40,7 +40,6 @@ plt.plot(inputs, outputs, label="Initial Regression")
 
 
 RSS_vals = net.gradient_descent(2000, return_rss=True)
-print(net.weights)
 
 outputs = [net.predict(i/100) for i in range(800)]
 
@@ -49,7 +48,7 @@ plt.xlabel('Inputs')
 plt.ylabel('Outputs')
 plt.legend()
 
-plt.savefig('NN_9_Neuron.png')
+plt.savefig('NN_9_Neuron_Regression.png')
 
 plt.clf()
 plt.title("Neural Network RSS")
