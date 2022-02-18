@@ -4,7 +4,17 @@ from neural_net import NeuralNet
 import matplotlib.pyplot as plt
 
 
+def normalize(data_list):
+  normalized_data = []
+  min_x, min_y = min(data_list)
+  max_x, max_y = max(data_list)
+  for point in data_list:
+    normalized_data.append(((point[0]-min_x)/(max_x-min_x), (point[1]-min_y)/(max_y-min_y)))
+  return normalized_data
+
+
 data = [(-5,-3),(-4,-1),(-3,1),(-2,2),(-1,-1),(1,-1),(2,1),(3,2),(4,3),(5,4),(6,2),(7,0)]
+data = normalize(data)
 weights = {(1,3):0,
            (1,4):0,
            (2,3):0,
