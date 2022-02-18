@@ -45,7 +45,7 @@ outputs = [net.predict(i/100) for i in range(-1000,1100)]
 plt.clf()
 plt.style.use('bmh')
 plt.title("Neural Network Regression")
-plt.scatter([-5,-4,-3,-2,-1,1,2,3,4,5,6,7],[-3,-1,1,2,-1,-1,1,2,3,4,2,0], label='Datapoints')
+plt.scatter(*zip(*data), label='Datapoints')
 plt.plot(inputs, outputs, label="Initial Regression")
 
 
