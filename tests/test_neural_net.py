@@ -39,8 +39,8 @@ net.change_neuron_actv_func(9, lambda x: x)
 net.gradient_descent(1)
 print(net.weights, '\n')
 
-inputs = [i/100 for i in range(-1000,1100)]
-outputs = [net.predict(i/100) for i in range(-1000,1100)]
+inputs = [i/100 for i in range(0,100)]
+outputs = [net.predict(i/100) for i in range(0,100)]
 
 plt.clf()
 plt.style.use('bmh')
@@ -51,7 +51,7 @@ plt.plot(inputs, outputs, label="Initial Regression")
 
 RSS_vals = net.gradient_descent(2000, alpha=0.001, return_rss=True)
 
-outputs = [net.predict(i/100) for i in range(-1000,1100)]
+outputs = [net.predict(i/100) for i in range(0,100)]
 
 plt.plot(inputs, outputs, label="Final Regression")
 plt.xlabel('Inputs')
