@@ -26,7 +26,6 @@ class Graph:
           neighbor_list.append(self.nodes[pair[0]])
       node.neighbors = neighbor_list
 
-
   def get_nodes_breadth_first(self, starting_index):
     for node in self.nodes:
       node.distance = 0

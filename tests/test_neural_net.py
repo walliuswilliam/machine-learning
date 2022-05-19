@@ -39,7 +39,7 @@ net = NeuralNet(weights, data, lambda x: max(0,x), 9, [2,5,8])
 net.gradient_descent(1)
 print(net.weights, '\n')
 
-inputs = [i/100 for i in range(0,100)]
+inputs = [i/100 for i in range(0,1000)]
 outputs = [net.predict(num) for num in inputs]
 
 plt.clf()
