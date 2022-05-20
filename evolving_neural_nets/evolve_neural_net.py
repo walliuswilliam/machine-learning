@@ -67,12 +67,12 @@ class NeuralNet:
         visited = []
         while queue != []:
             curr_neuron = queue[0]
-            if curr_neuron != self.root_neuron and neuron.bias == False:
+            if curr_neuron.index != 1 and curr_neuron.bias == False:
                 curr_neuron.input = self.calc_neuron_input(curr_neuron)
             self.set_neuron_output(curr_neuron)
-            visited.append(curr_neuron)
+            visited.append(curr_neuron.index)
             for child in curr_neuron.children:
-                if child not in visited:
+                if child.index not in visited and child.index not in [n.index for n in queue]:
                     queue.append(child)
             queue.pop(0)
 
@@ -156,7 +156,6 @@ def create_new_generation(gen):
       child_weights[pair] = weight+parent.alpha*np.random.normal()
     child_mut_rate = parent.alpha*(math.exp(np.random.normal()/(2**(1/2)*(len(parent.weights))**(1/4))))
     child = NeuralNet(child_weights, parent.data, parent.actv_func, len(parent.neurons), parent.biases, alpha=child_mut_rate, neurons=parent.neurons)
-    print(child.biases)
     new_gen.append(child)
   
   return new_gen

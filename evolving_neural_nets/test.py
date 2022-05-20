@@ -1,7 +1,8 @@
 import sys, os, pkg_resources, math
 pkgs = sorted([str(i.key) for i in pkg_resources.working_set])
 if 'matplotlib' not in pkgs: os.system("pip install matplotlib")
-import matplotlib.pyplot as plt, time
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 sys.path.append('evolving_neural_nets')
 from evolve_neural_net import *
 
@@ -22,30 +23,49 @@ def normalize(data):
   
 data = normalize(data)
 
-start = time.time()
-
-num_gens = 5
+num_gens = 2000
 avg_rss = []
 first_gen = create_initial_generation([1,10,6,3,1], data, lambda x: math.tanh(x))
-stop = time.time()
-
-print('initial creation', stop-start)
 
 current_gen = first_gen
 for _ in range(num_gens):
-  start = time.time()
   avg_rss.append(get_avg_rss(current_gen))
-  stop = time.time()
-  print('avg rss', stop-start)
-  start = time.time()
   current_gen = create_new_generation(current_gen)
-  stop = time.time()
-  print('new gen', stop-start)
-  print('gen', _, '\n')
-
+  if _%50==0:
+    print('gen', _)
 
 plt.plot(list(range(num_gens)), avg_rss)
 plt.title('Evolving Neural Net')
 plt.xlabel('Num Generation')
 plt.ylabel('Avg RSS')
 plt.savefig('evolving_neural_nets/rss_values.png')
+plt.clf()
+
+
+x_values = []
+for i in range(1):
+    for j in range(0,101):
+        x_values.append(i+j*0.01)
+
+for net in first_gen:
+  y_values = []
+  for x in x_values:
+    y_values.append(net.predict(x))
+  plt.plot(x_values, y_values, color='blue')
+
+for net in current_gen:
+  y_values = []
+  for x in x_values:
+    y_values.append(net.predict(x))
+  plt.plot(x_values, y_values, color='red')
+
+plt.scatter([p[0] for p in data], [p[1] for p in data], color='green')
+custom_lines = [Line2D([0], [0], color='blue', lw=4),
+                Line2D([0], [0], color='red', lw=4),
+                Line2D([0], [0], marker='o', color='w', label='Scatter',
+                          markerfacecolor='g', markersize=12)]
+plt.legend(custom_lines, ['Initial Gen', f'Final Gen ({num_gens})', 'Data'])
+plt.title('Evolving Neural Net')
+plt.xlabel('X')
+plt.ylabel('Predicted Value')
+plt.savefig('evolving_neural_nets/evolved_networks.png')
