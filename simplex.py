@@ -40,13 +40,25 @@ class Simplex:
             self.clear_above_and_below(col, row)
         return -self.matrix[-1][-1]
 
+    def print_coeffs(self):
+        coeffs = {'x1':None,'x2':None,'x3':None}
+        for row in self.matrix:
+            if row[0] == 1:
+                coeffs['x1'] = row[-1]
+            if row[1] == 1:
+                coeffs['x2'] = row[-1]
+            if row[2] == 1:
+                coeffs['x3'] = row[-1]
+        print(coeffs)
+
+
 
 matrix = [[3,2,5,1,0,0,0,55],[2,1,1,0,1,0,0,26],[1,1,3,0,0,1,0,30],[5,2,4,0,0,0,1,57],[20,10,15,0,0,0,0,0]]
 s = Simplex(matrix)
-print(s.max)
-
+s.print_coeffs()
+print('max', s.max, '\n')
 
 matrix = [[2,1,1,1,0,0,14],[4,2,3,0,1,0,28],[2,5,5,0,0,1,30],[1,2,1,0,0,0,0]]
 s = Simplex(matrix)
-print(s.max)
-
+s.print_coeffs()
+print('max', s.max)
