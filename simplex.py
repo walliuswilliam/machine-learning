@@ -16,15 +16,16 @@ class Simplex:
         row_idx = 0
         
         for i in range(len(const)):
-            if 0 < const[i]/col[i] < const[row_idx]/col[row_idx]:
-                row_idx = i
+            if col[i] != 0 and col[row_idx] != 0: 
+                if 0 < const[i]/col[i] < const[row_idx]/col[row_idx]:
+                    row_idx = i
         return row_idx
 
     def reduce_row(self, row_idx, col_idx):
         row = self.matrix[row_idx]
         self.matrix[row_idx] = [i/row[col_idx] for i in row]
 
-    def clear_above_and_below(self, col_idx, row_idx):
+    def clear_column(self, col_idx, row_idx):
         for row_i, row in enumerate(self.matrix):
             temp_row = []
             if row_i != row_idx:
@@ -37,7 +38,7 @@ class Simplex:
             col = self.choose_col()
             row = self.choose_row(col)
             self.reduce_row(row, col)
-            self.clear_above_and_below(col, row)
+            self.clear_column(col, row)
         return -self.matrix[-1][-1]
 
     def print_coeffs(self):
