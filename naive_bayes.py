@@ -18,14 +18,17 @@ class NaiveBayes:
     def classify(self, input_list, class_list):
         predictions = []
         for observation in input_list:
-            cls_1_val = self.calc_probability(None, None, class_list[0])*self.calc_probability(0, observation[0], class_list[0])*self.calc_probability(1, observation[1], class_list[0])
-            cls_2_val = self.calc_probability(None, None, class_list[1])*self.calc_probability(0, observation[0], class_list[1])*self.calc_probability(1, observation[1], class_list[1])
-            if cls_1_val > cls_2_val:
+            class_values = []
+            for class_type in class_list:
+                prediction = self.calc_probability(None, None, class_type)
+                prediction *= self.calc_probability(0, observation[0], class_type)
+                prediction *= self.calc_probability(1, observation[1], class_type)
+                class_values.append(prediction)
+            if class_values[0] > class_values[1]:
                 predictions.append(class_list[0])
             else:
                 predictions.append(class_list[1])
         return predictions
-
 
 
 
